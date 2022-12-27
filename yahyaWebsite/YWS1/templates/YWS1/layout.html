@@ -1,0 +1,201 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://kit.fontawesome.com/b62d5bbaa3.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'YWS1/style.css' %}">
+    <title>Document</title>
+    {% if user_info.mainColor != ''  %}
+    <style>
+        :root{
+            --MainColor:  {{ user_info.mainColor }} ;
+        }
+        
+    </style>
+    {% endif %}
+</head>
+
+<body>
+    
+    <div id="curser_ball">
+        <i id="chape" class="fa-solid"></i>
+    </div>
+
+    <div class="header">
+        <ul>
+            <li>
+                <div><a href="{% url 'home' %}">logo</a></div>
+            </li>
+            <li>
+                <div><a href="{% url 'home' %}">home</a></div>
+            </li>
+            <li>
+                <div><a href="{% url 'YWS1:sub1' %}">sub1</a></div>
+            </li>
+            <li>
+                <div><a href="{% url 'YWS1:sub2' %}">sub2</a></div>
+            </li>
+            <li>
+                <div name="user">
+                    {% if not user_info.name == '' %}
+                    <p name="user_name" id="user_name">{{ user_info.name }}</p>
+                    {% else %}
+                    <a href="{% url 'YWS1:login' %}">no_user</a>
+                    {% endif %}
+                </div>
+            </li>
+        </ul>
+        <div class="progress-container">
+            <div class="progress-bar" id="myBar"></div>
+        </div>
+    </div>
+    <div class="user_setting" id="user_setting">
+        <ul>
+            <li>
+                <div id="close">X</div>
+            </li>
+            <li><a href="{% url 'YWS1:about' %}">About me</a></li>
+            <li><a href="{% url 'YWS1:orders' %}">Orders</a></li>
+            {% if user_info.gmail == "admin@gmail.com"  %}
+            <li><a href="{% url 'YWS1:admin' %}">admin stuff</a></li>
+            {% endif %}
+            <li><a href="{% url 'YWS1:logout' %}">Logout</a></li>
+
+        </ul>
+    </div>
+
+
+    {% block body %}
+    {% endblock %}
+
+
+    <div class="footer">
+        <div class="footerBox">
+            <p>made by yahya arafat mater</p>
+            <p>follow me in</p>
+        </div>
+    </div>
+    <script>
+        //setting
+        try {
+            user_setting_state = 0;
+            user_name = document.getElementById("user_name");
+            user_setting = document.getElementById("user_setting");
+
+            user_name.onclick = function open() {
+                user_setting.style.transform = "translateX(0vh)";
+                user_setting_state = 1;
+
+            }
+
+            user_setting_close = document.getElementById("close");
+
+            user_setting_close.onclick = function close() {
+                user_setting.style.transform = "translateX(35vh)";
+                user_setting_state = 0;
+            }
+            
+        } catch (error) {
+            console.log("user not loged-in");
+        }
+
+
+
+        //scroll
+        var prevScrollpos = window.pageYOffset;
+        window.onscroll = function scroll() {
+            var currentScrollPos = window.pageYOffset;
+            if (prevScrollpos > currentScrollPos) {
+                document.querySelector(".header").style.top = "0";
+            } else if (user_setting_state == 0) {
+                document.querySelector(".header").style.top = "calc(-7.5vh + 4px)";
+            }
+            prevScrollpos = currentScrollPos;
+            progressbar();
+        }
+
+        //progress bar
+        function progressbar() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("myBar").style.width = scrolled + "%";
+        }
+
+
+        //header shower
+        document.querySelector("body").onclick = function () {
+            document.querySelector(".header").style.top = "0";
+        }
+
+
+        //curser related
+        const curser_ball = document.getElementById("curser_ball");
+        const chape = document.getElementById("chape").classList;
+        window.onmousemove = function ball_movement(e) {
+           const x = e.clientX - curser_ball.offsetWidth / 2;
+           const y = e.clientY - curser_ball.offsetHeight / 2;
+
+           var scale;
+           root = document.querySelector(':root').style;
+           //target tagname
+           switch (e.target.tagName) {
+            case "A":
+                chape.add('fa-location-arrow');//link
+                curser_ball.style.backgroundColor = "transparent";
+                root.setProperty('--currentCurserColor','var(--curserColorLink)');
+                scale = "1.25";
+                break;
+            case "INPUT":
+                chape.add('fa-keyboard');//input
+                curser_ball.style.backgroundColor = "transparent";
+                root.setProperty('--currentCurserColor','var(--curserColorInput)');
+                scale = "0.75";
+                break;
+            case "IMAGE":
+                break;
+            case "VIDEO":
+                break;
+            default:
+                chape.remove('fa-gear');//setting
+                chape.remove('fa-keyboard');//input
+                chape.remove('fa-location-arrow');//link
+                chape.remove('fa-x');//close
+                curser_ball.style.backgroundColor = "var(--curserColor)";
+                scale = "1";
+                break;
+           }
+           //then
+           //target id
+           switch (e.target.getAttribute('id')) {
+            case "user_name":
+                chape.add('fa-gear');//setting
+                curser_ball.style.backgroundColor = "transparent";
+                root.setProperty('--currentCurserColor','var(--curserColorSetting)');
+                scale = "0.75";
+                break;
+            case "close":
+                chape.add('fa-x');//close
+                curser_ball.style.backgroundColor = "transparent";
+                root.setProperty('--currentCurserColor','var(--curserColorClose)');
+                scale = "0.75";
+                break;
+           
+            default:
+                break;
+           }
+           
+           
+            curser_ball.style.transform = `scale(${scale})`;
+            curser_ball.style.translate = `${x}px ${y}px`;
+        }
+
+    </script>
+</body>
+
+</html>

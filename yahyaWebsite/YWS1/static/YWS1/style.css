@@ -1,0 +1,445 @@
+
+        * {
+            margin: 0%;
+            padding: 0%;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+            cursor: none;     
+        }
+
+        body {
+            background-color: var(--backgroundColor);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        a,
+        a:link,
+        a:active,
+        a:visited,
+        a:hover {
+            color: var(--textColor);
+            text-decoration: none;
+        }
+
+        :root {
+            --MainColor: rgb(255, 85, 0);
+            --SubColor: rgb(0, 166, 255);
+            --textColor: rgb(255, 255, 255);
+            --backgroundColor: rgb(0, 5, 40);
+            --settingColor: rgb(0, 0, 0);
+            --currentCurserColor: var(--curserColor);
+            --curserColor: brown;
+            --curserColorLink: rgb(0, 166, 255);
+            --curserColorInput: green;
+            --curserColorImage: red;
+            --curserColorSetting: gray;
+            --curserColorClose: red;
+            --curserState: none;
+        }
+        
+        #curser_ball{
+            width: 30px;
+            height: 30px;
+            position: fixed;
+            top: 0%;
+            left: 0%;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 1000;
+            transition: opacity 0.25s ease-in-out, transform 0.5s ease-in-out;
+            border-radius: 50%;
+            background-color: var(--curserColor);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+        }
+        html:hover #curser_ball{
+            opacity: 1;
+        }
+        #chape{
+            color: var(--currentCurserColor);
+        }
+
+        .header {
+            z-index: 5;
+            position: fixed;
+            top: 0%;
+            transition: 0.5s ease-in-out;
+            background-color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            justify-content: center;
+            width: 100%;
+            height: 7.5vh;
+            padding-left: 0.5%;
+            padding-right: 0.5%;
+            font-size: 1.25rem;
+            color: var(--textColor);
+            margin-bottom: auto;
+        }
+
+        .header ul {
+            list-style-type: none;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            align-items: center;
+            justify-content: left;
+            width: 100%;
+            height: 100%;
+        }
+
+        .header ul li {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: right;
+            gap: 10px;
+            height: 100%;
+            width: auto;
+        }
+
+        .header ul li div {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            min-width: 4rem;
+            width: auto;
+            border: 3px solid transparent;
+        }
+
+        .header ul li>div:hover {
+            border: 3px solid var(--MainColor);
+        }
+
+        .header ul li div :is(a,p){
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            cursor: var(--curserState);
+        }
+        .header ul li div a {
+            color: var(--MainColor);
+        }
+
+        .header ul li:last-child {
+            margin-left: auto;
+            color: var(--SubColor);
+        }
+
+        .header ul li:last-child>div:hover:has(p) {
+            border: 3px solid var(--SubColor);
+        }
+
+        
+
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background: transparent;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: linear-gradient(45deg,var(--MainColor),var(--SubColor));
+            width: 0%;
+        }
+
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            min-height: 80vh;
+            padding: 1rem;
+            background-color: transparent;
+            font-size: 1rem;
+            color: var(--textColor);
+            margin-top: 7.5vh;
+        }
+        .content.override{
+            padding: 0%;
+        }
+
+        .content ul {
+            list-style-type: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .content .form_container {
+            width: 50vh;
+            height: min-content;
+            border: 5px solid var(--textColor);
+            border-radius: 10px / 10px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .content .form_container form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            row-gap: 15px;
+        }
+        .content .form_container form input {
+            width: 80%;
+            height: 3rem;
+            font-size: 1.25rem;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            border: 0px;
+            background-color: var(--textColor);
+            border: 3px solid transparent;
+            outline: none;
+        }
+        .content .form_container form input:focus{
+            border: 3px solid rgb(0, 200, 255);
+        }
+        .content .form_container form input:invalid:not(:focus,:placeholder-shown){
+            border: 3px solid red;
+        }
+        .content .form_container form input:valid:not([type="submit"],:focus){
+            border: 3px solid green;
+        }
+        .content .form_container form input[type="submit"]:hover {
+            color: var(--textColor);
+            background-color: green;
+            cursor: var(--curserState);
+        }
+
+        .content table{
+            width: 100%;
+        }
+        .content :is(table,tr,td){
+            border-collapse: collapse;
+            border: 3px solid var(--textColor);
+        }
+        .content table td{
+            width: 1fr;
+        }
+        .content table td:last-child{
+            text-align: center;
+        }
+
+        .content :where(.frame_holder, .frame_holder iframe){
+            justify-self: right;
+            align-self: flex-end;
+            width: 100%;
+            min-height: 80vh;
+            border-radius: 10px 0px 0px 10px / 10px 0px 0px 10px;
+        }
+        .content .frame_holder{
+            background-color: rgb(255, 128, 0);
+            width:calc(100% - 60px);
+        }
+
+        .row_display{
+            width: 100%;
+            display: grid;
+            grid-template-columns: minmax(30px,auto) 1fr;
+            column-gap: 10px;
+            grid-template-rows: auto;
+            
+        }
+
+        .welcome_holder{
+            width: 100%;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+        .welcome_holder p{
+            white-space: nowrap;
+        }
+        .welcome_holder p:first-child{
+            font-size: max(5vw, 30px);
+            color: var(--MainColor);
+        }
+        .welcome_holder p:last-child{
+            font-size: max(8vw, 50px);
+            color: var(--SubColor);
+            margin-left: max(2vw, 20px);
+        }
+
+        .user_options{
+            transition: all 0.5s ease-in-out;
+            position: absolute;
+            top: 7.5vh;
+            left: 0%;
+            width: 35vh;
+            height: 80.5vh;
+            background-color: var(--textColor);
+            color: var(--backgroundColor);
+            border-radius: 0px 10px 10px 0px / 0px 10px 10px 0px;
+        }
+        .user_options div{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: left;
+            width: 100%;
+            height: 50px;
+            background-color: var(--MainColor);
+            color: var(--textColor);
+            font-size: 2rem;
+            border-radius: 0px 10px 0px 0px / 0px 10px 0px 0px;
+            column-gap: 10px;
+            padding-left: 10px;
+        }
+        .user_options ul{
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px 0px 10px 0px;
+            row-gap: 5px;
+            width: 100%;
+            background-color: inherit;
+            border-radius: 0px 10px 10px 0px / 0px 10px 10px 0px;
+        }
+        .user_options ul li{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: left;
+            width: calc(100% + 40px) ;
+            padding-left: 40px;
+            height: 30px;
+            border: 3px solid transparent;
+            background-color: inherit;
+            transition: all 0.5s ease-in-out;
+            border-radius: 0px 10px 10px 0px / 0px 10px 10px 0px;
+
+        }
+        .user_options ul li:hover{
+            transform: translateX(20px);
+            background-color: var(--MainColor);
+        }
+        .user_options ul li:not(:hover){
+            transform: translateX(-20px);
+            background-color: var(--textColor);
+        }
+        .user_options p{
+            transition: all 0.5s ease-in-out;
+            overflow-x: hidden;
+            white-space: nowrap;
+        }
+
+        .footer {
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            padding-top: 20px;
+            width: 100%;
+            min-height: 30vh;
+            background-color: var(--backgroundColor);
+            margin-top: auto;
+        }
+
+        .footerBox {
+            border-top: 5px solid var(--textColor);
+            padding-top: 10px;
+            padding-left: 10%;
+            padding-right: 10%;
+            height: 100%;
+            width: 100%;
+            color: var(--MainColor);
+        }
+
+        .user_setting {
+            z-index: 6;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            top: 0%;
+            right: 0%;
+            width: 35vh;
+            height: 100%;
+            background-color: var(--settingColor);
+            color: var(--textColor);
+            transform: translateX(35vh);
+            transition: 0.5s ease-in-out;
+        }
+
+        .user_setting ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .user_setting ul li:first-child {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+            border-left: 0px solid var(--textColor);
+        }
+
+        .user_setting ul li:first-child div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            min-width: 50px;
+            border: 3px solid var(--textColor);
+            cursor: var(--curserState);
+        }
+
+        .user_setting ul li:first-child div:hover {
+            background-color: var(--textColor);
+            color: var(--settingColor);
+        }
+
+        .user_setting ul li:first-child:hover {
+            background-color: transparent;
+            color: var(--textColor);
+        }
+
+        .user_setting ul li {
+            display: inherit;
+            flex-direction: inherit;
+            align-items: inherit;
+            justify-content: center;
+            width: 100%;
+            min-height: 50px;
+            border-left: 3px solid var(--textColor);
+            border-bottom: 3px solid var(--textColor);
+        }
+
+        .user_setting ul li a {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            color: inherit;
+        }
+
+        .user_setting ul li:hover {
+            background-color: var(--textColor);
+            color: var(--settingColor);
+        }
+
+        .user_setting ul li:last-child {
+            margin-top: auto;
+            border-top: 3px solid var(--textColor);
+            border-bottom: 0px solid var(--textColor);
+        }

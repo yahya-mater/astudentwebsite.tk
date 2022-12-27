@@ -1,0 +1,19 @@
+{% extends "YWS2/layout.html" %}
+
+
+
+
+{% block body %}
+<div class="form_container">
+    <form action="{% url 'YWS2:log-in' %}" method="post">
+        {% csrf_token %}
+        <input type="email" name="email" placeholder="email" required>
+        <input type="password" name="password" placeholder="password" minlength="8" required>
+        {% if massage %}
+        <p style="color: red;">{{ massage }}</p>
+        {% endif %}
+        <p>don't have an account <a href="{% url 'YWS2:sign-in' %}" style="color: blue;">sign-in</a></p>
+        <input type="submit" value="log-in">
+    </form>
+</div>
+{% endblock %}
