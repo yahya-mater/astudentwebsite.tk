@@ -1,0 +1,69 @@
+{% extends "YWS1/layout.html" %}
+
+
+
+
+{% block body %}
+
+
+<div class="content override">
+    <div class="user_options">
+        <div>
+            <i class="fa-solid fa-bars"></i>
+            <p>User setting</p>
+        </div>
+        <ul>
+            <li>
+                <p>personal info</p>
+            </li>
+            <li>
+                <p>personal setting</p>
+            </li>
+            <li>
+                <p>about account</p>
+            </li>
+            <li>
+                <p>else</p>
+            </li>
+        </ul>
+    </div>
+    <div class="frame_holder">
+        <iframe src="" frameborder="0"></iframe>
+    </div>
+
+
+
+</div>
+<script>
+    user_setting = document.querySelector(".fa-bars");
+    user_options = document.getElementsByClassName('user_options')[0];
+    var state = 1;
+    var UOW = user_options.style.width;
+    user_setting.onclick = function () {
+        switch (state) {
+            case 1:
+                user_options.style.width = "50px";
+                for (let index = 0; index < user_options.getElementsByTagName("p").length; index++) {
+                    const element = user_options.getElementsByTagName("p")[index];
+                    element.style.opacity = "0";
+                    element.style.visibility = "hidden";
+                }
+                state = 0;
+                break;
+            case 0:
+                user_options.style.width = UOW;
+                for (let index = 0; index < user_options.getElementsByTagName("p").length; index++) {
+                    const element = user_options.getElementsByTagName("p")[index];
+                    element.style.opacity = "1";
+                    element.style.visibility = "visible";
+                }
+                state = 1;
+                break;
+
+            default:
+                break;
+        }
+    }
+</script>
+
+{% endblock %}

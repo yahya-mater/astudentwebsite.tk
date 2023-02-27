@@ -1,0 +1,24 @@
+{% extends "YWS1/layout.html" %}
+
+
+
+
+{% block body %}
+
+
+<div class="content">
+
+    <div class="form_container">
+        <form action="{% url 'YWS1:login' %}" method="post">
+            {% csrf_token %}
+            <h2>Login</h2>
+            {{ form }}
+            <p style="color: red;">{{ massage }}</p>
+            <p>you don't have an account <a href="{% url 'YWS1:signin' %}" style="color: blue;text-decoration: underline;">Sing-in</a></p>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}
