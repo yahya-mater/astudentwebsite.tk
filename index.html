@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        *{
+        * {
             margin: 0%;
             padding: 0%;
             box-sizing: border-box;
         }
-        body{
+
+        body {
             padding: 0%;
             margin: 0%;
             box-sizing: border-box;
@@ -21,7 +23,8 @@
             flex-direction: column;
             overflow-x: hidden;
         }
-        :is(h1,h2,h3){
+
+        :is(h1, h2, h3) {
             text-align: center;
             color: white;
         }
@@ -34,5 +37,28 @@
     <h2>server updating</h2>
     <h3> ... or down</h3>
     <h3>probably down</h3>
+    <script>
+        const websiteUrl = "http://127.0.0.1:8000/api";
+        const websiteUrl2 = "http://127.0.0.5:5000/api";
+
+        fetch(websiteUrl)
+            .then(res => {
+                if (res.ok) {
+                    console.log('yes1')
+                    window.location.href = websiteUrl;
+                }
+            })
+            .catch(error => {
+                fetch(websiteUrl2)
+                    .then(res => {
+                        if (res.ok) {
+                            console.log('yes2')
+                            window.location.href = websiteUrl2;
+                        }
+                    })
+            })
+
+    </script>
 </body>
+
 </html>
